@@ -1,4 +1,4 @@
-# Liquid_FMDemod
+# FMDemodulator
 
 ## Description
 
@@ -18,4 +18,4 @@ This work is protected by Copyright. Please refer to the [Copyright File](COPYRI
 
 ## License
 
-Liquid_FMDemod is licensed under the GNU General Public License (GPL).
+FMDemodulator is licensed under the GNU General Public License (GPL).
