@@ -18,7 +18,6 @@
 # along with this program.  If not, see http://www.gnu.org/licenses/.Boston, MA 02110-1301, USA.
 #
 
-
 AC_INIT(FMDemodulator, 1.0.0)
 AM_INIT_AUTOMAKE(nostdinc)
 
@@ -37,6 +36,13 @@ PKG_CHECK_MODULES([INTERFACEDEPS], [bulkio >= 1.0 bulkioInterfaces >= 1.9])
 OSSIE_ENABLE_LOG4CXX
 AX_BOOST_BASE([1.41])
 AX_BOOST_THREAD
+
+export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:/var/redhawk/sdr/dom/sharedPkgs/liquid-dsp/default_impl"
+PKG_CHECK_MODULES(libliquid, libliquid >= 1.2.0)
+AC_SUBST(libliquid_CFLAGS)
+AC_SUBST(libliquid_LIBS)
+CXXFLAGS="$CXXFLAGS $libliquid_CFLAGS"
+LIBS="$LIBS $libliquid_LIBS"
 
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT
