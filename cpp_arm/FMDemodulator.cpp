@@ -38,20 +38,25 @@
 FMDemodulator_i::FMDemodulator_i(const char *uuid, const char *label) :
     FMDemodulator_base(uuid, label)
 {
-	//options
-	m_modIndex = 0.125; 					// modulation index (bandwidth)
-	m_bandwidth = 64000;
-	m_fc = 0.0f; 							// FM carrier
-	m_type = LIQUID_FREQDEM_DELAYCONJ;		// Demod type
-	m_demod = 0;
+	//Enable property change listeners to call propertyChangeListener when a property changes
+	setPropertyChangeListener("Modulation Type", this,
+			&FMDemodulator_i::propertyChangeListener);
+	setPropertyChangeListener("Bandwidth", this,
+			&FMDemodulator_i::propertyBandwidthChanged);
+	setPropertyChangeListener("Modulation Index", this,
+			&FMDemodulator_i::propertyChangeListener);
 
-	m_delta = 0.000003906;					// input xdelta
+	//options
+	m_demod = NULL;
+
+	m_delta = 0.0;							// input xdelta
 	m_size = 8196;							// input size
 	m_filterObjectCreated = false;			//filter created flag
 
 	//initialize variables
 	m_lastSize = 0;
-	m_propertyChanged = 1;
+	m_propertyChanged = true;
+	m_bandwidthChanged = true;
 }
 
 FMDemodulator_i::~FMDemodulator_i()
@@ -72,14 +77,26 @@ int FMDemodulator_i::serviceFunction()
 
 	//Re-make demod object based on new properties
 	if (m_propertyChanged || input->sriChanged) {
+
+		if(Modulation_Type == "LIQUID_FREQDEM_DELAYCONJ"){
+			m_type = LIQUID_FREQDEM_DELAYCONJ;
+		}else if(Modulation_Type == "LIQUID_FREQDEM_PLL"){
+			m_type = LIQUID_FREQDEM_PLL;
+		}else{
+			std::cerr << "No Valid Modulation Type" << std::endl;
+			return NOOP;
+		}
+		m_delta = input->SRI.xdelta;
+		Sample_Rate = 1.0 / m_delta;
+
 		createDemod();
 		sizeVectors();
-		m_delta = input->SRI.xdelta;
 
 	    //Push new SRI data
 		input->SRI.mode = 0; //outputs real data
 		dataFloat_out->pushSRI(input->SRI);
-		m_propertyChanged = 0;
+		m_propertyChanged = false;
+		m_bandwidthChanged = false;
 	}
 	//Resize vectors if input size changes
 	if (m_lastSize != m_size) {sizeVectors();}
@@ -102,7 +119,16 @@ void FMDemodulator_i::createDemod(void)
 	if (m_filterObjectCreated) {freqdem_destroy(m_demod);}
 
 	//Set m_modIndex and create m_demod object
-	m_modIndex = m_delta*m_bandwidth;
+	if(Modulation_Index == 0 || m_bandwidthChanged){
+		m_modIndex = m_delta*Bandwidth;
+		Modulation_Index = m_modIndex;
+	}else{
+		m_modIndex = Modulation_Index;
+		Bandwidth = m_modIndex / m_delta;
+	}
+
+	checkProperties();
+
 	m_demod = freqdem_create(m_modIndex,m_type);
 	m_filterObjectCreated = true;
 }
@@ -113,9 +139,38 @@ void FMDemodulator_i::sizeVectors(void)
 	m_output.resize(m_size);
 	m_lastSize = m_size;
 }
+
 void FMDemodulator_i::propertyChangeListener(const std::string& id)
 {
 	//Set flag showing that properties changed
-	m_propertyChanged=1;
+	m_propertyChanged=true;
+}
+
+void FMDemodulator_i::propertyBandwidthChanged(const std::string& id)
+{
+	//Set flag showing that properties and bandwidth changed
+	m_propertyChanged=true;
+	m_bandwidthChanged=true;
+}
+
+void FMDemodulator_i::checkProperties(void){
+	//Check m_modIndex is valid
+	if (m_modIndex<=0 || m_modIndex>1){
+		m_modIndex = 0.5;
+		Modulation_Index = 0.5;
+		Bandwidth = Sample_Rate/2;
+		std::cerr << "WARNING! -- 'Modulation Index' Must Be Greater Than Zero And Less"
+				"Than Or Equal To One!" << std::endl;
+		std::cerr << "-- 'Modulation Index' Set to 0.5" << std::endl;
+	}
+
+	//Check that Bandwidth is valid
+	if (Bandwidth > (Sample_Rate/2) || Bandwidth <= 0) {
+		Bandwidth = Sample_Rate/2;
+		m_modIndex = 0.5;
+		Modulation_Index = 0.5;
+		std::cerr << "WARNING! -- 'Bandwidth' Must Be Equal to or Less Than 0.5*'Sample Rate'!" << std::endl;
+		std::cerr << "-- 'Bandwidth' Set to 0.5*'Output_Rate'" << std::endl;
+	}
 }
 

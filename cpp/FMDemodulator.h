@@ -43,19 +43,20 @@ class FMDemodulator_i : public FMDemodulator_base
 		freqdem m_demod;
 
     	float m_modIndex;
-    	float m_fc;
-    	float m_bandwidth;
 
     	double m_delta;
 		unsigned int m_size;
 		unsigned int m_lastSize;
 		bool m_filterObjectCreated;
 
-		int m_propertyChanged;
+		bool m_propertyChanged;
+		bool m_bandwidthChanged;
 
     	void propertyChangeListener(const std::string&);
+    	void propertyBandwidthChanged(const std::string&);
     	void sizeVectors(void);
     	void createDemod(void);
+    	void checkProperties(void);
 };
 
 #endif

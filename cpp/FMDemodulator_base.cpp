@@ -1,23 +1,3 @@
-/*
- * This file is protected by Copyright. Please refer to the COPYRIGHT file
- * distributed with this source distribution.
-
- * This file is part of FMDemodulator.
-
- * FMDemodulator is free software: you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation, either version 3 of the License, or (at your
- * option) any later version.
-
- * FMDemodulator is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * for more details.
-
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see http://www.gnu.org/licenses/.
- */
-
 #include "FMDemodulator_base.h"
 
 /*******************************************************************************************
@@ -134,4 +114,40 @@ void FMDemodulator_base::releaseObject() throw (CORBA::SystemException, CF::Life
 
 void FMDemodulator_base::loadProperties()
 {
+    addProperty(Modulation_Type,
+                "LIQUID_FREQDEM_DELAYCONJ",
+                "Modulation Type",
+                "",
+                "readwrite",
+                "",
+                "external",
+                "configure");
+
+    addProperty(Bandwidth,
+                64000,
+                "Bandwidth",
+                "",
+                "readwrite",
+                "",
+                "external",
+                "configure");
+
+    addProperty(Modulation_Index,
+                0,
+                "Modulation Index",
+                "",
+                "readwrite",
+                "",
+                "external",
+                "configure");
+
+    addProperty(Sample_Rate,
+                0,
+                "Sample Rate",
+                "",
+                "readonly",
+                "",
+                "external",
+                "configure");
+
 }

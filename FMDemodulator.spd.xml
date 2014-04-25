@@ -1,31 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
- This file is protected by Copyright. Please refer to the COPYRIGHT file
- distributed with this source distribution.
-
- This file is part of FMDemodulator.
-
- FMDemodulator is free software: you can redistribute it and/or modify it
- under the terms of the GNU General Public License as published by the
- Free Software Foundation, either version 3 of the License, or (at your
- option) any later version.
-
- FMDemodulator is distributed in the hope that it will be useful, but WITHOUT
- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- for more details.
-
- You should have received a copy of the GNU General Public License
- along with this program.  If not, see http://www.gnu.org/licenses/.
--->
-
 <!DOCTYPE softpkg PUBLIC "-//JTRS//DTD SCA V2.2.2 SPD//EN" "softpkg.dtd">
 <softpkg id="DCE:fbc168ff-6db2-4c74-ac24-b3380f45c7ff" name="FMDemodulator" type="sca_compliant">
   <title></title>
   <author>
     <name>null</name>
   </author>
-  <description>This component performs an FM demodulation using the liquid-dsp library (http://liquidsdr.org). This component takes in complex data that is at baseband.</description>
+  <description>This component performs an FM demodulation using the liquid-dsp library (http://liquidsdr.org). This component takes in complex data that is at baseband and outputs real data.</description>
   <propertyfile type="PRF">
     <localfile name="FMDemodulator.prf.xml"/>
   </propertyfile>
