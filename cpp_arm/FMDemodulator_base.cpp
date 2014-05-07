@@ -56,7 +56,6 @@ FMDemodulator_base::~FMDemodulator_base()
 *******************************************************************************************/
 void FMDemodulator_base::start() throw (CORBA::SystemException, CF::Resource::StartError)
 {
-    printf("****** FMDEMOD BASE START ******\n");
     Resource_impl::start();
     ThreadedComponent::startThread();
 }
