@@ -47,6 +47,8 @@ Requires:       redhawk >= 1.10
 BuildRequires:  bulkioInterfaces >= 1.10
 Requires:       bulkioInterfaces >= 1.10
 
+BuildRequires:  liquid_dsp_v1-devel >= 1.0.0
+Requires:       liquid_dsp_v1 >= 1.0
 %description
 Component %{name}
 
@@ -63,13 +65,6 @@ pushd cpp
 %configure
 make %{?_smp_mflags}
 popd
-# Implementation cpp_arm
-pushd cpp_arm
-./reconf
-%define _bindir %{_prefix}/dom/components/FMDemodulator/cpp_arm
-%configure
-make %{?_smp_mflags}
-popd
 
 
 %install
@@ -77,11 +72,6 @@ rm -rf $RPM_BUILD_ROOT
 # Implementation cpp
 pushd cpp
 %define _bindir %{_prefix}/dom/components/FMDemodulator/cpp
-make install DESTDIR=$RPM_BUILD_ROOT
-popd
-# Implementation cpp_arm
-pushd cpp_arm
-%define _bindir %{_prefix}/dom/components/FMDemodulator/cpp_arm
 make install DESTDIR=$RPM_BUILD_ROOT
 popd
 
@@ -97,5 +87,4 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/dom/components/%{name}/FMDemodulator.prf.xml
 %{_prefix}/dom/components/%{name}/FMDemodulator.spd.xml
 %{_prefix}/dom/components/%{name}/cpp
-%{_prefix}/dom/components/%{name}/cpp_arm
 

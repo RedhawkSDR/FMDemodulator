@@ -23,7 +23,7 @@
 
 #include "FMDemodulator_base.h"
 #include <stdio.h>
-#include <liquid/liquid.h>
+#include <liquid.h>
 #include <complex>
 
 class FMDemodulator_i;
