@@ -18,10 +18,9 @@
  You should have received a copy of the GNU Lesser General Public License
  along with this program.  If not, see http://www.gnu.org/licenses/.
 -->
-
 <!DOCTYPE properties PUBLIC "-//JTRS//DTD SCA V2.2.2 PRF//EN" "properties.dtd">
 <properties>
-  <simple id="Modulation Type" mode="readwrite" type="string">
+  <simple id="Modulation Type" mode="readwrite" name="Modulation Type" type="string">
     <description>Demodulation type. Liquid provides two different types of demodulation. One using a delay/conjugate method and one using a phase-locked loop.</description>
     <value>LIQUID_FREQDEM_DELAYCONJ</value>
     <enumerations>
@@ -31,19 +30,19 @@
     <kind kindtype="configure"/>
     <action type="external"/>
   </simple>
-  <simple id="Bandwidth" mode="readwrite" type="float">
+  <simple id="Bandwidth" mode="readwrite" name="Bandwidth" type="float">
     <description>The Bandwidth of the desired demodulation signal. This is used to calculate the Modulation Index. The bandwidth cannot be greater than 1/2 * Sample Rate.</description>
     <value>64000</value>
     <kind kindtype="configure"/>
     <action type="external"/>
   </simple>
-  <simple id="Modulation Index" mode="readwrite" type="float">
+  <simple id="Modulation Index" mode="readwrite" name="Modulation Index" type="float">
     <description>The Modulation Index used in demodulation. This is calculated from dividing the Bandwidth by the Sample Rate. The Modulation Index must be a value between 0-1. </description>
     <value>0</value>
     <kind kindtype="configure"/>
     <action type="external"/>
   </simple>
-  <simple id="Sample Rate" mode="readonly" type="float">
+  <simple id="Sample Rate" mode="readonly" name="Sample Rate" type="float">
     <description>A read only property that shows the sample rate of the signal. </description>
     <value>0</value>
     <kind kindtype="configure"/>

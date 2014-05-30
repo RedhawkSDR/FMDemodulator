@@ -39,24 +39,27 @@ class FMDemodulator_i : public FMDemodulator_base
         //Data Vectors
 		std::vector<float> m_output;
 
+		//Demod Object Variables
 		liquid_freqdem_type m_type;
 		freqdem m_demod;
+		bool m_filterObjectCreated;
 
-    	float m_modIndex;
-
+		//SRI Data
     	double m_delta;
 		unsigned int m_size;
 		unsigned int m_lastSize;
-		bool m_filterObjectCreated;
+		BULKIO::StreamSRI m_sriOut;
 
-		bool m_propertyChanged;
-		bool m_bandwidthChanged;
-
-    	void propertyChangeListener(const std::string&);
-    	void propertyBandwidthChanged(const std::string&);
+		//Member Functions
     	void sizeVectors(void);
     	void createDemod(void);
-    	void checkProperties(void);
+
+    	//Property Change Listeners
+    	void modulationTypeChanged(const std::string *oldValue, const std::string *newValue);
+    	void bandwidthChanged(const float *oldValue, const float *newValue);
+    	void modulationIndexChanged(const float *oldValue, const float *newValue);
+
+    	boost::mutex propertyLock_;
 };
 
 #endif

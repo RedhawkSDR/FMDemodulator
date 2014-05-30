@@ -84,34 +84,25 @@ print '\n*********** Stopping Sandbox ************'
 sb.stop()
 print 'Components stopped'
 
-#Index begins when data is no longer skewed
-index = 100000
-while abs(output[index]) > 0.001:
-	index += 1
-
-#Set values up to index to 0 for more accurate results
-for i in range(0, index):
-	output[i] = 0
-
 # Remove DC Bias from output
 bias = sum(output)/float(len(output))
 output = [(item-bias) for item in output]
 
 # Scale output to have same magnitude as input
-output_max = max(output[index:len(x)])
-x_max = max(x[index:len(x)])
+output_max = max(output[0:len(x)])
+x_max = max(x[0:len(x)])
 gain_adjust = output_max/x_max
 output = [(item/gain_adjust) for item in output]
 
 # Shift output to have same phase as input
 count = 0
 output_i = 0
-if output[index] > 0:
+if output[0] > 0:
 	last_sign = 1
 else:
 	last_sign = -1
 
-for i,j in enumerate(output[index:]):
+for i,j in enumerate(output[0:]):
 	if j > 0:
 		sign = 1
 	else:
@@ -126,12 +117,12 @@ for i,j in enumerate(output[index:]):
 
 count = 0
 x_i = 0
-if x[index] > 0:
+if x[0] > 0:
 	last_sign = 1
 else:
 	last_sign = -1
 
-for i, j in enumerate(x[index:]):
+for i, j in enumerate(x[0:]):
 	if j > 0:
 		sign = 1
 	else:
@@ -146,7 +137,7 @@ for i, j in enumerate(x[index:]):
 difference = x_i - output_i
 output = np.roll(output, difference)
 
-# Plot the data
+#Plot the data
 #plt.plot(x)
 #plt.plot(modfm)
 #plt.plot(output)
@@ -154,7 +145,7 @@ output = np.roll(output, difference)
 
 #Validate results
 assert len(x) == len(output), 'Input signal and output result are not equal'
-sumError = sum([abs(y-z) for y,z in zip(output[index:],x[index:])])
+sumError = sum([abs(y-z) for y,z in zip(output[0:],x[0:])])
 meanError = sumError/len(output)
 #print 'meanError =',meanError
 passed = True
