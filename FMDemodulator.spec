@@ -36,7 +36,7 @@ Release:        1%{?dist}
 Summary:        Component %{name}
 
 Group:          REDHAWK/Components
-License:        None
+License:        GPLv3+
 Source0:        %{name}-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -49,8 +49,11 @@ Requires:       bulkioInterfaces >= 1.10
 
 BuildRequires:  liquid_dsp_v1-devel >= 1.0.0
 Requires:       liquid_dsp_v1 >= 1.0
+
 %description
 Component %{name}
+ * Commit: __REVISION__
+ * Source Date/Time: __DATETIME__
 
 
 %prep
