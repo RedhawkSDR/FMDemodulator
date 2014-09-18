@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE softpkg PUBLIC "-//JTRS//DTD SCA V2.2.2 SPD//EN" "softpkg.dtd">
 <!--
  This file is protected by Copyright. Please refer to the COPYRIGHT file
  distributed with this source distribution.
@@ -18,9 +18,8 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see http://www.gnu.org/licenses/.
 -->
-<!DOCTYPE softpkg PUBLIC "-//JTRS//DTD SCA V2.2.2 SPD//EN" "softpkg.dtd">
-<softpkg id="DCE:fbc168ff-6db2-4c74-ac24-b3380f45c7ff" name="FMDemodulator" type="sca_compliant" version="1.0.0">
-  <title></title>
+<softpkg version="1.0.0" id="DCE:fbc168ff-6db2-4c74-ac24-b3380f45c7ff" name="FMDemodulator" type="sca_compliant">
+  <title/>
   <author>
     <name>null</name>
   </author>
